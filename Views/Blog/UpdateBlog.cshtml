@@ -1,0 +1,136 @@
+﻿@model BlogDto;
+@{
+    ViewData["Title"] = "Update Blog";
+    var blog = (Blog)ViewBag.Blog;
+    var categoryList = (List<Category>)ViewBag.CategoryList;
+    var locationList = (List<Location>)ViewBag.LocationList;
+   
+}
+<div class="card shadow m-4">
+    <div class="card-header py-3">
+        <h3 class="m-0 font-weight-bold text-primary">Update blog</h3>
+        <h3 class="text-danger">@ViewBag.Message</h3>
+    </div>
+    <div class="card-body">
+        <form id="blog-form" asp-controller="Blog" asp-action="UpdateBlog" method="post" enctype="multipart/form-data">
+            <input type="text" asp-for="Id" value="@blog.Id" hidden/>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Title:</label>
+                <input type="text" asp-for="Title" class="form-control" id="exampleFormControlInput1" placeholder="Enter title here..." value="@blog.Title">
+                <span class="text-danger" asp-validation-for="Title"></span>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Short Description:</label>
+                <input type="text" asp-for="ShortDescription" class="form-control" id="exampleFormControlInput1" placeholder="Enter short description here..." value="@blog.ShortDescription">
+                <span class="text-danger" asp-validation-for="ShortDescription"></span>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Content:</label>
+                <textarea name="Content" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter content here...">@blog.Content</textarea>
+                <span class="text-danger" asp-validation-for="Content"></span>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Image:</label>
+                <div class="row-cols-4">
+                    <input asp-for="Image" type="file" class="form-control" id="exampleFormControlInput1">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Location:</label> <br />
+                <label class="form-check">
+                    @for (int i = 0; i < locationList.Count; i++)
+                    {
+                        if (locationList[i].Name.Equals(blog.Location.Name))
+                        {
+                            <input asp-for="LocationId" class="form-check-input" type="radio" id="flexRadioDefault1" value="@locationList[i].Id" checked>
+                        }
+                        else
+                        {
+                            <input asp-for="LocationId" class="form-check-input" type="radio" id="flexRadioDefault1" value="@locationList[i].Id">
+                        }
+                        <label class="form-check-label pr-5" for="flexRadioDefault1">
+                            @locationList[i].Name
+                        </label>
+                    }
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Public:</label> <br />
+                @if (blog.IsPublic)
+                {
+                    <div class="form-check">
+                        <input asp-for="IsPublic" class="form-check-input" type="radio" id="flexRadioDefault1" value="true" checked>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="IsPublic" class="form-check-input" type="radio" id="flexRadioDefault2" value="false">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            No
+                        </label>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-check">
+                        <input asp-for="IsPublic" class="form-check-input" type="radio" id="flexRadioDefault1" value="true" >
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="IsPublic" class="form-check-input" type="radio" id="flexRadioDefault2" value="false" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            No
+                        </label>
+                    </div>
+                }
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <div class="col-4">
+                        <label for="exampleFormControlInput1">Category:</label> <br />
+                        <select asp-for="CategoryId" class="form-control" aria-label=".form-select-lg example">
+                            @foreach (Category category in categoryList)
+                            {
+                                if (category.Name.Equals(blog.Category.Name))
+                                {
+                                    <option value="@category.Id" selected>
+                                        @category.Name
+                                    </option>
+                                }
+                                else{
+                                    <option value="@category.Id">
+                                        @category.Name
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col-5">
+                        <label asp-for="PublictDate" for="exampleFormControlInput1">Public Date:</label>
+                        <input type="date" class="form-control" asp-for="PublictDate" id="exampleFormControlInput1" value="@blog.PublictDate.ToString("yyyy-MM-dd")">
+                        <span class="text-danger" asp-validation-for="PublictDate"></span>
+                    </div>
+                </div>
+            </div>
+            <hr class="sidebar-divider">
+            <div class="container d-flex justify-content-center">
+                <div class="d-flex gap-2">
+                    <input type="submit" value="Update" class="btn btn-success mr-3" />
+                    <input type="button" value="Clear" class="btn btn-primary" onclick="clearForm()" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function clearForm() {
+        document.getElementById("blog-form").reset();
+    }
+</script>

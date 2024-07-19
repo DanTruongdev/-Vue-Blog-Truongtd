@@ -1,0 +1,72 @@
+﻿@using BlogOnline.Models.Entities;
+@model List<Blog>
+@{
+    ViewData["Title"] = "Index";
+    int index = 1;
+    string yesOrNo(bool isPublic)
+    {
+        if (isPublic) return "Yes";
+        return "No";
+    }
+}
+<div class="card shadow mb-4">
+<div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">All blogs</h6>
+</div>
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Public</th>
+                    <th>Location</th>
+                    <th>Image</th>
+                    <th>Public Date</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                    
+                </tr>
+            </thead>
+            
+            <tbody>
+                @foreach(var item in Model)
+                {
+                  
+                        var parms = new Dictionary<string, string>()
+                        {
+                            {"Id", item.Id.ToString()}
+                        };
+
+                        <tr>
+                        <td>@index</td>
+                        <td>@item.Title</td>
+                        <td>@item?.Category.Name</td>
+                        <td>@yesOrNo(item.IsPublic)</td>
+                        <td>@item.Location.Name</td>
+                        <td class="text-center" >
+                            <img src="@item.Image" alt="Alternate Text" width="80px" />
+                        </td>
+                        <td>@item.PublictDate.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <a type="button" asp-controller="Blog" asp-action="UpdateBlog" asp-all-route-data="@parms"
+                                    class="btn btn-outline-primary">
+                                Edit
+                            </a>
+                        </td>
+                        <td>
+                            <a type="button" asp-controller="Blog" asp-action="RemoveBlog" asp-all-route-data="@parms"
+                                    class="btn btn-outline-danger">
+                                Delete
+                            </a>
+                        </td>
+                        </tr>
+                        index++;
+                    }
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>

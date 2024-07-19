@@ -1,0 +1,40 @@
+﻿
+<ul class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href="index.html">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <h3>Menu</h3>
+        </a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" asp-controller="Blog" asp-action="Index" 
+           aria-expanded="true" >
+            <i class="bi bi-list"></i>
+            <span>List</span>
+        </a>
+    </li>
+    <li class="nav-item" > 
+        <a class="nav-link collapsed" asp-controller="Blog" asp-action="CreateBlog"
+           aria-expanded="true" >
+            <i class="bi bi-plus-circle-fill"></i>
+            <span>New</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" asp-controller="Blog" asp-action="SearchBlog"
+           aria-expanded="true" >
+            <i class="bi bi-search"></i>
+            <span>Search</span>
+        </a>
+    </li>
+
+</ul>
